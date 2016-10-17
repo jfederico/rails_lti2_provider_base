@@ -154,7 +154,7 @@ module RailsLti2Provider
 
     def self.engine_name
       engine = Rails.application.routes.named_routes.routes.values.find do |r|
-        r.app.class.name == 'Class' && r.app.name == "RailsLti2Provider::Engine"
+        r.app.app.class.to_s == 'Class' && r.app.app.to_s == "RailsLti2Provider::Engine"
       end
       engine.name
     end
