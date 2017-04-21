@@ -4,7 +4,7 @@ module RailsLti2Provider
     def lti_authentication
       lti_message = IMS::LTI::Models::Messages::Message.generate(request.request_parameters)
       lti_message.launch_url = request.url
-      @lti_launch = RailsLti2Provider::LtiLaunch.check_launch(lti_message)
+      @lti_launch = RailsLti2Provider::LtiLaunch.check_launch(lti_message, get_account_code)
     end
 
 
@@ -53,5 +53,20 @@ module RailsLti2Provider
       uri.to_s
     end
 
+    def get_account_code
+      blacklist=["com", "ca", "co", "uk", "edu", "mx", "org", "net", "gov"]
+      code = "carleton"
+      ##************************************ONLY FOR TESTING*****************************************************
+      ##For urls in using the following pattern "culearn.carleton.ca", we only want the 'carleton' part
+      ## - Create account on castle with code: code variable ABOVE
+      ## - Register LTI2.0 tool on Canvas, Sakai, Moodle
+      # example = "culearn.#{code}.ca"
+      # example.split('.').delete_if{ |word| blacklist.include? word }.last
+      ##************************************ONLY FOR TESTING*****************************************************
+
+      #************************************FOR PRODUCTION*******************************************************
+      request.host.split('.').delete_if{ |word| blacklist.include? word }.last
+      #************************************FOR PRODUCTION*******************************************************
+    end
   end
 end
