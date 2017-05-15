@@ -7,7 +7,6 @@ module RailsLti2Provider
       @lti_launch = RailsLti2Provider::LtiLaunch.check_launch(lti_message)
     end
 
-
     def disable_xframe_header
       response.headers.except! 'X-Frame-Options'
     end
@@ -23,7 +22,6 @@ module RailsLti2Provider
         @registration.correlation_id = SecureRandom.hex(64)
       end
       @registration.save!
-
     end
 
     def register_proxy(registration)
@@ -37,13 +35,12 @@ module RailsLti2Provider
     def redirect_to_consumer(registration_result)
       url = registration_result[:return_url]
       url = add_param(url, 'tool_proxy_guid', registration_result[:tool_proxy_uuid])
-      if registration_result[:status] == 'success'
-        url = add_param(url, 'status', 'success')
-        redirect_to url
-      else
-        url = add_param(url, 'status', 'error')
-        redirect_to url
+      status = 'success'
+      if registration_result[:status] != 'success'
+        status = 'error'
       end
+      url = add_param(url, 'status', status)
+      redirect_to url
     end
 
     def add_param(url, param_name, param_value)
