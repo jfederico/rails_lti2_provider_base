@@ -153,13 +153,13 @@ module RailsLti2Provider
     end
 
     def self.engine_name
-      engine = Rails.application.routes.named_routes.routes.values.find do |r|
-        r.app.app.class.to_s == 'Class' && r.app.app.to_s == "RailsLti2Provider::Engine"
+      engine = Rails.application.routes.named_routes.names.find do |r|
+        r.to_s.include?("rails_lti2_provider")
       end
-      engine.name
+      engine.to_s
     end
 
-    class UnsupportedCapabilitiesError < StandardError
+    class UnsupportedCapabilitiesError < StandardErrorR
     end
 
   end
