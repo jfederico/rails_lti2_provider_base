@@ -159,7 +159,7 @@ module RailsLti2Provider
       engine.to_s
     end
 
-    class UnsupportedCapabilitiesError < StandardErrorR
+    class UnsupportedCapabilitiesError < StandardError
     end
 
   end
