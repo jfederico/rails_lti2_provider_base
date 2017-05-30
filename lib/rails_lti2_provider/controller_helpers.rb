@@ -21,7 +21,6 @@ module RailsLti2Provider
         @registration.tool = Tool.where(uuid: params['oauth_consumer_key']).first
         @registration.correlation_id = SecureRandom.hex(64)
       end
-      @registration.save!
     end
 
     def register_proxy(registration)
