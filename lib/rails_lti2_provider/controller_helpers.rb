@@ -1,16 +1,17 @@
 module RailsLti2Provider
   module ControllerHelpers
 
-    def lti_authentication
+    def lti_authentication(tool)
       lti_message = IMS::LTI::Models::Messages::Message.generate(request.request_parameters)
       lti_message.launch_url = request.url
 
       # validate the launch
-      secret = RailsLti2Provider::Tool.find_by_uuid(request.request_parameters['oauth_consumer_key']).shared_secret
+      tool ||= RailsLti2Provider::Tool.find_by_uuid(request.request_parameters['oauth_consumer_key'])
+      secret = tool.shared_secret
       authenticator = IMS::LTI::Services::MessageAuthenticator.new(request.url, request.request_parameters, secret)
       raise RailsLti2Provider::LtiLaunch::Unauthorized.new(:invalid_signature) unless authenticator.valid_signature?
 
-      @lti_launch = RailsLti2Provider::LtiLaunch.check_launch(lti_message)
+      @lti_launch = RailsLti2Provider::LtiLaunch.check_launch(lti_message, tool)
     end
 
     def disable_xframe_header
