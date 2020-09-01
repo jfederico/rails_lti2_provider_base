@@ -2,7 +2,7 @@ module RailsLti2Provider
   class Tool < ActiveRecord::Base
     validates_presence_of :shared_secret, :uuid, :tool_settings, :lti_version
     serialize :tool_settings
-    belongs_to :tenant, foreign_key: :index_tenant_id
+    belongs_to :tenant, foreign_key: :tenant_id
     has_many :lti_launches
     has_many :registrations
 

@@ -6,7 +6,7 @@ require "rails_lti2_provider/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "rails_lti2_provider"
-  s.summary     = ""
+  s.summary     = "An aidee for implementing an LTI Tool provider"
   s.version     = RailsLti2Provider::VERSION
   s.authors     = ["Nathan Mills"]
   s.homepage    = %q{http://github.com/rivernate/rails_lti2_provider}
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 6.0.3"
   s.add_dependency "ims-lti", "~> 2.3.0"
 
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "sqlite3", "~> 1.3"
+  s.add_development_dependency "rspec-rails", "~> 4.0"
 
 end

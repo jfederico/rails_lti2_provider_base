@@ -5,6 +5,7 @@ class AddToolAssociationToTenant < ActiveRecord::Migration[6.0]
   end
 
   def self.down
+    remove_index 'rails_lti2_provider_tools', ['tenant_id']
     remove_column :rails_lti2_provider_tools, :tenant_id
   end
 end
